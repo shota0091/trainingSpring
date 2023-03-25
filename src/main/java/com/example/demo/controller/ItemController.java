@@ -17,10 +17,10 @@ public class ItemController {
 	@Autowired
 	ItemService itemService;
 	
-	@RequestMapping("/index")
+	@RequestMapping("index")
 	public String index(Model model) {
 		List<Item> items = itemService.serachAll();
 		model.addAttribute("items",items);
-		return "index";
+		return "html/index";
 	}
 }
