@@ -21,5 +21,10 @@ public class ItemService {
 	public List<Item> serachAll(){
 		return itemRepository.findAll();
 	}
+	
+	public Item fimdById(int id) {
+		return itemRepository.getReferenceById(id);
+		
+	}
 
 }

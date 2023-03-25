@@ -16,10 +16,15 @@
                 <th>説明</th>
             </tr>
 		<tr th:each="item:${items}">
+			
 			<td th:text="${item.id}"></td>
 			<td th:text="${item.name}"></td>
 			<td th:text="${item.price}"></td>
 			<td th:text="${item.text}"></td>
+			<td>
+				<a th:href="@{/item/show/}+${item.id}">詳細</a>
+			</td>
+				
 		</tr>
 	</table>
 </body>
