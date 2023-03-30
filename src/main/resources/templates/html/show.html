@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -14,19 +14,15 @@
                 <th>商品名</th>
                 <th>価格</th>
                 <th>説明</th>
-                <th>詳細ページ</th>
             </tr>
-		<tr th:each="item:${items}">
+		<tr>
 			
 			<td th:text="${item.id}"></td>
 			<td th:text="${item.name}"></td>
 			<td th:text="${item.price}"></td>
 			<td th:text="${item.text}"></td>
-			<td>
-				<a th:href="@{/item/show/}+${item.id}">詳細</a>
-			</td>
-				
 		</tr>
 	</table>
+	<a th:href="@{/item/index}">一覧ページに戻る</a>
 </body>
 </html>
