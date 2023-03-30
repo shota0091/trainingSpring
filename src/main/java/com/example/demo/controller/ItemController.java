@@ -29,7 +29,7 @@ public class ItemController {
 	@RequestMapping("/item/show/{id}")
 	public String show(@PathVariable int id,Model model) {
 		Item item = itemService.fimdById(id);
-		model.addAttribute("id",item);
+		model.addAttribute("item",item);
 		return "html/show";
 		
 	}
