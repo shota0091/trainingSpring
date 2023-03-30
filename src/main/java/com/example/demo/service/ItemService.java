@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Item;
+import com.example.demo.itemFrom.ItemFrom;
 import com.example.demo.repository.ItemRepository;
 
 @Service
@@ -25,6 +26,15 @@ public class ItemService {
 	public Item fimdById(int id) {
 		return itemRepository.getReferenceById(id);
 		
+	}
+	
+	public void save(ItemFrom from) {
+		Item item = new Item();
+		item.setName(from.getName());
+		item.setPrice(from.getPrice());
+		item.setText(from.getText());
+		itemRepository.save(item);
+		return;
 	}
 
 }
