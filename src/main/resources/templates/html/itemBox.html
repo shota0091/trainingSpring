@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link th:href="@{/css/list.css}" rel="stylesheet">
 </head>
 <body>
+	<body>
 	<h2>商品一覧</h2>
 	<a th:href="@{/item/newItemInput}">商品投稿</a>
-	<a th:href="@{/item/itemBox}">買い物かご</a>
+	<a th:href="@{/item/index}">戻る</a>
+	<div th:text=${caveat}></div>
 	<table>
 		<thead>
             <tr>
@@ -18,34 +19,29 @@
                 <th>説明</th>
                 <th>個数</th>
                 <th>詳細ページ</th>
-                <th>買い物かごへ</th>
+                <th>買い物かごから外す</th>
             </tr>
-		<tr th:each="item, status:${items}">
-			
+		<tr th:each="item, status :${session.baskes}">
 			<td th:text="${item.id}"></td>
-			<td th:text="${item.name}"></td>
+		    <td th:text="${item.name}"></td>
 			<td th:text="${item.price}"></td>
 			<td th:text="${item.text}"></td>
-			<td th:text="${item.quantity}"></td>
+			<td th:text="${session.purchase[status.index]}"></td>
 			<td>
 				<a th:href="@{/item/show/}+${item.id}">詳細</a>
 			</td>
 			<td>
-				<form method="post" th:action="@{/item/itemBox/add}">
+				<form method="post" th:action="@{/item/itemBox/remove/}+${status.index}">
 					<input type="hidden" name="id" th:value="${item.id}">
 					<input type="hidden" name="name" th:value="${item.name}">
 					<input type="hidden" name="price" th:value="${item.price}">
 					<input type="hidden" name="text" th:value="${item.text}">
 					<input type="hidden" name="quantity" th:value="${item.quantity}">
-					<select name="purchaseQuantity">
-						<option value="" selected>選択してください</option>
-						<option th:each="i : ${#numbers.sequence(0, item.quantity)}"
-						 th:value="${i}" th:text="${i}"  ></option>
-					</select>
-					<input type="submit" value="買い物かごに入れる">
+					<input type="submit" value="買い物かごから外す">
 				</form>
 			</td>	
 		</tr>
 	</table>
+	
 </body>
 </html>

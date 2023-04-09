@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.entity.Item;
 import com.example.demo.itemFrom.ItemFrom;
+import com.example.demo.repository.ItemRepository;
 import com.example.demo.service.ItemService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ItemController {
 
 	@Autowired
 	ItemService itemService;
-
+	
+	@Autowired
+	HttpSession session;
+	
+	@Autowired
+	ItemRepository itemRepository;
+	
+	List<Item> basketList = new ArrayList<Item>();
 	
 	@RequestMapping("/item/index")
 	public String index(Model model) {
@@ -48,4 +59,7 @@ public class ItemController {
 		itemService.save(from);
 		return "redirect:/item/index";
 	}
+
+
+
 }

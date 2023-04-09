@@ -26,4 +26,7 @@ public class Item {
 	
 	@Column(name = "text")
     private String text;
+	
+	@Column(name = "quantity")
+    private int quantity;
 }
