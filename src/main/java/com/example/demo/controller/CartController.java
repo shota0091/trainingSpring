@@ -50,9 +50,8 @@ public class CartController {
 			purchaseList.set(i,purchaseList.get(i) + from.getPurchaseQuantity());
 			if(item.getQuantity() < purchaseList.get(i)) {
 				model.addAttribute("caveat","商品より数が多いです。");
-				basketList.remove(item);
-				purchaseList.remove(i);
-				return "forward:/item/index";
+				purchaseList.set(i,purchaseList.get(i) - from.getPurchaseQuantity());
+				return "forward:/item/itemBox";
 			}
 		}
 		return "redirect:/item/itemBox";
