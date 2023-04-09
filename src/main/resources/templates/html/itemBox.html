@@ -25,16 +25,22 @@
 		    <td th:text="${item.name}"></td>
 			<td th:text="${item.price}"></td>
 			<td th:text="${item.text}"></td>
-			<td th:text="${item.quantity}"></td>
+			<td th:text="${session.purchase[status.index]}"></td>
 			<td>
 				<a th:href="@{/item/show/}+${item.id}">詳細</a>
 			</td>
 			<td>
 				<form method="post" th:action="@{/item/itemBox/remove/}+${status.index}">
+					<input type="hidden" name="id" th:value="${item.id}">
+					<input type="hidden" name="name" th:value="${item.name}">
+					<input type="hidden" name="price" th:value="${item.price}">
+					<input type="hidden" name="text" th:value="${item.text}">
+					<input type="hidden" name="quantity" th:value="${item.quantity}">
 					<input type="submit" value="買い物かごから外す">
 				</form>
 			</td>	
-		
+		</tr>
 	</table>
+	
 </body>
 </html>

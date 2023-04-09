@@ -9,6 +9,7 @@
 	<h2>商品一覧</h2>
 	<a th:href="@{/item/newItemInput}">商品投稿</a>
 	<a th:href="@{/item/itemBox}">買い物かご</a>
+	<div th:text=${caveat}></div>
 	<table>
 		<thead>
             <tr>
@@ -37,7 +38,11 @@
 					<input type="hidden" name="price" th:value="${item.price}">
 					<input type="hidden" name="text" th:value="${item.text}">
 					<input type="hidden" name="quantity" th:value="${item.quantity}">
-					<input type="number" name="purchaseQuantity">
+					<select name="purchaseQuantity">
+						<option value="" selected>選択してください</option>
+						<option th:each="i : ${#numbers.sequence(0, item.quantity)}"
+						 th:value="${i}" th:text="${i}"  ></option>
+					</select>
 					<input type="submit" value="買い物かごに入れる">
 				</form>
 			</td>	

@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,52 +28,41 @@ public class CartController {
 	
 	@Autowired
 	ItemRepository itemRepository;
-	
-	ArrayList<Item> basketList = new ArrayList<>();
+	ArrayList<Integer> purchaseList = new ArrayList<>();
+	LinkedHashSet<Item> basketList = new LinkedHashSet<>();
 	// 買い物かご
 	@RequestMapping("/item/itemBox")
 	public String box(CartFrom from) {
 		session.setAttribute("baskes",basketList);
+		session.setAttribute("purchase",purchaseList);
 		return "html/itemBox";
 	}
 
 	// 買い物籠追加
 	@RequestMapping("/item/itemBox/add")
-	public String boxAdd(@ModelAttribute Item item,CartFrom from) {
-		item.setQuantity(from.getPurchaseQuantity());
-		int id1 = basketList.lastIndexOf(item);
-		
-		System.out.println(id1);
-		if(basketList.isEmpty()) {
-			basketList.add(item);
-		}else if(id1 < 0) {
-			if(basketList.contains(item) == false) {
-				basketList.add(item);
-				System.out.println(222123);
-			}else {
-				System.out.println(123);
+	public String boxAdd(@ModelAttribute Item item,CartFrom from,Model model) {
+		basketList.add(item);
+		if(basketList.size() == (purchaseList.size() + 1)) {
+			purchaseList.add(from.getPurchaseQuantity());
+		}else {
+			ArrayList<Item> list = new ArrayList<Item>(basketList);
+			int i = list.indexOf(item);
+			purchaseList.set(i,purchaseList.get(i) + from.getPurchaseQuantity());
+			if(item.getQuantity() < purchaseList.get(i)) {
+				model.addAttribute("caveat","商品より数が多いです。");
+				basketList.remove(item);
+				purchaseList.remove(i);
+				return "forward:/item/index";
 			}
-			
-		}else if(id1 > 0){
-			int i = basketList.get(id1).getId();
-			if(i == item.getId()) {
-				System.out.println(456);
-			}else {
-				System.out.println(789);
-				basketList.add(item);
-			}
-			
-			
 		}
-			
-//			System.out.println(basketList);
 		return "redirect:/item/itemBox";
 	}
-	
+
 	// 買い物籠削除
 	@RequestMapping("/item/itemBox/remove/{id}")
-	public String remove(@PathVariable int id) {
-		basketList.remove(id);
+	public String remove(@ModelAttribute Item item,@PathVariable int id) {
+		basketList.remove(item);
+		purchaseList.remove(id);
 		return "redirect:/item/itemBox";
 	}
 }

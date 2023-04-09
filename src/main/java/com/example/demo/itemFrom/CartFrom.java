@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class CartFrom {
 
-	private int PurchaseQuantity;
+	private int purchaseQuantity;
 }
