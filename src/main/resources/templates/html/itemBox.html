@@ -16,14 +16,16 @@
                 <th>商品名</th>
                 <th>価格</th>
                 <th>説明</th>
+                <th>個数</th>
                 <th>詳細ページ</th>
-                <th>詳細ページ</th>
+                <th>買い物かごから外す</th>
             </tr>
 		<tr th:each="item, status :${session.baskes}">
 			<td th:text="${item.id}"></td>
 		    <td th:text="${item.name}"></td>
 			<td th:text="${item.price}"></td>
 			<td th:text="${item.text}"></td>
+			<td th:text="${item.quantity}"></td>
 			<td>
 				<a th:href="@{/item/show/}+${item.id}">詳細</a>
 			</td>
@@ -32,7 +34,7 @@
 					<input type="submit" value="買い物かごから外す">
 				</form>
 			</td>	
-		</tr>
+		
 	</table>
 </body>
 </html>
